@@ -35,7 +35,7 @@
 
 **Розрахунок: 85/85 × 100 = 100.**
 
-Три попередні зауваження P3 усунено: перевірка schedule/manual тепер провалює job за битих посилань; GitHub вимагає PR і status check для main, включно з адміністратором; release asset Lychee перевіряється за review-pinned SHA-256 до розпакування. Локальний installer і позитивні/негативні тести пройшли. Публікація змін очікує проходження required CI для PR.
+Три попередні зауваження P3 усунено: перевірка schedule/manual тепер провалює job за битих посилань; GitHub вимагає PR і status check для main, включно з адміністратором; release asset Lychee перевіряється за review-pinned SHA-256 до розпакування. Локальний installer і позитивні/негативні тести пройшли. PR #1 пройшов required check, squash-злитий у main комітом dad0bb94f3552528b58cb8266300baa84549f8a7; push-workflow на цій ревізії теж завершився успішно. Після оновлення звіту буде створений release v1.0.2 із фінальної main.
 
 ## 2. Опис і карта проєкту
 
@@ -83,7 +83,7 @@ README містить навички автора, не application dependencies
 - **Доказ:** read-only GitHub API підтвердив `enforce_admins=true`, `strict=true`, `contexts=[link-checker]`, approvals `0`, `allow_force_pushes=false`, `allow_deletions=false`.
 - **Очікуваний результат:** зміни main зливаються тільки після PR і успішного CI; single-owner підтримка не вимагає другого reviewer.
 - **Критерій:** PR запускає `link-checker`; невдалий check блокує merge, зелений дозволяє його без обов'язкового схвалення іншого користувача.
-- **Упевненість:** висока щодо налаштування; end-to-end merge не заявляється до зеленого PR run.
+- **Упевненість:** висока щодо налаштування; required check пройшов на PR head c6e4534, PR #1 злито, а push check коміту dad0bb94 завершився успішно.
 
 ### A-03 — integrity Lychee release asset
 
@@ -106,7 +106,7 @@ README містить навички автора, не application dependencies
 |---|---|---|---|---|
 | Встановлення Lychee | Action завантажувала артефакт без digest pin | Версійний CLI з SHA-256 verification до запуску | Контроль байтів виконуваного артефакту | Мала; digest оновлювати разом із версією |
 
-Перехід уже впроваджений у гілці PR. Для наступного upgrade: перевірити upstream release, взяти asset digest із довіреного джерела, змінити версію й digest разом, пройти positive/negative CI, за потреби повернути попередній pin. Інших замін не потрібно.
+Перехід інтегрований у main squash-комітом dad0bb94. Для наступного upgrade: перевірити upstream release, взяти asset digest із довіреного джерела, змінити версію й digest разом, пройти positive/negative CI, за потреби повернути попередній pin. Інших замін не потрібно.
 
 ## 7. Що залишити без змін
 
@@ -147,7 +147,7 @@ README в Git — профіль GitHub. PR, push, schedule і manual запус
 - Локальний Lychee CLI перевірив README та позитивні/негативні локальні Markdown fixtures; це не підміняє остаточний GitHub-hosted run із точної PR-ревізії.
 - Linux x86_64 asset локально завантажено і перевірено через installer. Upstream digest для aarch64 закріплено, але ARM CI runner не запускався.
 - Повний SBOM, MFA/recovery акаунта, GitHub log-retention і незалежне відновлення акаунта поза межами коду та цього аудиту.
-- Злиття PR і віддалений workflow run підтверджуються окремо після фактичного виконання GitHub CI; до зеленого результату не заявляти реліз як завершений.
+- PR #1 merged 2026-10-28 після зеленого required check. Перевірка push для merge-коміту main також успішна. Після merge документаційного PR створити реліз v1.0.2 з фінальної main.
 
 ## 13. Методологія та джерела
 
@@ -159,7 +159,7 @@ README в Git — профіль GitHub. PR, push, schedule і manual запус
 - GitHub Release API Lychee v0.24.2: platform-specific SHA-256; локальний installer у Git Bash фактично завантажив, перевірив, розпакував і встановив архів.
 - Windows CLI того самого Lychee release, digest архіву перевірено: README exit 0; справний локальний link exit 0; відсутній local target exit 2.
 - GitHub main protection API: PR required, strict status `link-checker`, enforce admins, approval count 0, force-push/deletions disabled.
-- Остаточний PR check, merge, commit, tag і release фіксуються в handoff після завершення.
+- [PR #1 required link-checker passed on c6e4534](https://github.com/ajjs1ajjs/ajjs1ajjs/actions/runs/40717893411); [squash merge dad0bb9 push run passed](https://github.com/ajjs1ajjs/ajjs1ajjs/actions/runs/40718273937).
 
 ### Джерела, перевірені 2026-10-28
 
@@ -174,4 +174,4 @@ README в Git — профіль GitHub. PR, push, schedule і manual запус
 - [S10 — GitHub Actions job timeout](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idtimeout-minutes)
 - [S11 — GitHub Actions secure use](https://docs.github.com/en/actions/reference/security/secure-use)
 
-**Змінено в гілці:** `.github/workflows/link-check.yml`, `.github/scripts/install-lychee.sh`, `AUDIT_REPORT.md`. README і `.gitattributes` збережені. Після злиття перевірити, що main містить цей PR, запушити tag v1.0.2 і створити відповідний GitHub release.
+**Змінено в гілці:** `.github/workflows/link-check.yml`, `.github/scripts/install-lychee.sh`, `AUDIT_REPORT.md`. README і `.gitattributes` збережені. Усі зміни мають увійти до protected main через успішні PR checks. Release v1.0.2 створюється з фінального main SHA після документаційного follow-up.
