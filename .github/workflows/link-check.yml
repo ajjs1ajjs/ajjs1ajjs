@@ -15,12 +15,22 @@ permissions:
 jobs:
   link-checker:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install verified Lychee CLI
+        run: bash ./.github/scripts/install-lychee.sh
 
       - name: Check markdown links
-        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
-        with:
-          args: --verbose --no-progress './README.md'
-          fail: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+        run: |
+          set +e
+          lychee --verbose --no-progress --format markdown './README.md' > "$RUNNER_TEMP/lychee.log" 2>&1
+          result=$?
+          set -e
+          cat "$RUNNER_TEMP/lychee.log"
+          cat "$RUNNER_TEMP/lychee.log" >> "$GITHUB_STEP_SUMMARY"
+          exit "$result"
