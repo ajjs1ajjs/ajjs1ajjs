@@ -1,8 +1,8 @@
 # Технічний аудит і виправлення `ajjs1ajjs`
 
-**Дата:** 2026-10-28, Europe/Kyiv.
-**Проєкт:** E:\Code\ajjs1ajjs, публічний GitHub-репозиторій `ajjs1ajjs/ajjs1ajjs`.
-**Базова ревізія:** main, `04c1f98f64ae2cd873244c5d6c2bb4769b2fd6f2`.
+**Дата:** 2026-11-13, Europe/Kyiv.
+**Проєкт:** публічний GitHub-репозиторій `ajjs1ajjs/ajjs1ajjs`.
+**Базова ревізія:** main (`7a477915509b3f671dd37c0589ab61f20f0065b6`, реліз `v1.0.2`), оновлено у гілці `feat/profile-and-ci-improvements` для релізу `v1.1.0`.
 **Обсяг:** профільний репозиторій і його GitHub Actions. Виправлення перевіряються у PR; зовнішні сайти та продукти з README до обсягу коду не входять.
 
 ## 1. Executive Summary
@@ -35,7 +35,9 @@
 
 **Розрахунок: 85/85 × 100 = 100.**
 
-Три попередні зауваження P3 усунено: перевірка schedule/manual тепер провалює job за битих посилань; GitHub вимагає PR і status check для main, включно з адміністратором; release asset Lychee перевіряється за review-pinned SHA-256 до розпакування. Локальний installer і позитивні/негативні тести пройшли. PR #1 пройшов required check, squash-злитий у main комітом dad0bb94f3552528b58cb8266300baa84549f8a7; push-workflow на цій ревізії теж завершився успішно. Після оновлення звіту буде створений release v1.0.2 із фінальної main.
+Три попередні зауваження P3 усунено: перевірка schedule/manual провалює job за битих посилань; GitHub вимагає PR і status check для main, включно з адміністратором; release asset Lychee перевіряється за review-pinned SHA-256 до розпакування. PR #1 пройшов required check і був squash-злитий у main комітом `dad0bb94f3552528b58cb8266300baa84549f8a7`, після чого було випущено реліз `v1.0.2` (`7a47791`).
+
+У наступній ітерації (2026-11-13, підготовка релізу `v1.1.0`) додатково усунено технічні недогляди `A-04`–`A-06`: виправлено локальний запуск `install-lychee.sh` без `GITHUB_PATH`, додано перевірку OS та біт виконуваності `100755`, розділено лог та чистий Markdown-звіт `--output` у `link-check.yml`, додано ретраї/таймаути та `concurrency`, розширено перевірку посилань на `AUDIT_REPORT.md`, оновлено `.gitattributes` та збагачено `README.md` вітриною продуктів DIST Hub і англомовним резюме.
 
 ## 2. Опис і карта проєкту
 
@@ -96,6 +98,26 @@ README містить навички автора, не application dependencies
 - **Критерій:** невідповідний archive відхиляється перед запуском; справний archive проходить перевірку.
 - **Упевненість:** висока щодо локальної перевірки та provenance pin.
 
+### A-04 — безпека локального запуску та режим файлу `install-lychee.sh`
+
+- **Категорія/пріоритет:** CI / надійність скрипту, закрито (реліз `v1.1.0`).
+- **Було:** у `.github/scripts/install-lychee.sh` під `set -euo pipefail` виконувався безумовний запис `>> "$GITHUB_PATH"`, що спричиняло помилку `GITHUB_PATH: unbound variable` при локальному запуску; була відсутня перевірка `uname -s == Linux`, `tar` не передавав `--no-same-owner`, а файл у Git-індексі мав права `100644`.
+- **Стало:** додано перевірку `[[ "$(uname -s)" != "Linux" ]]`, прапорець `--no-same-owner` при розпакуванні, умовний запис у `GITHUB_PATH` (`if [[ -n "${GITHUB_PATH:-}" ]]; then ... fi`) та встановлено права `100755` у Git-індексі.
+- **Доказ:** скрипт успішно виконано локально без `GITHUB_PATH` (`env -u GITHUB_PATH RUNNER_TEMP=/tmp bash ./.github/scripts/install-lychee.sh`, exit 0).
+
+### A-05 — чистий summary, стійкість до мережевих збоїв та повне покриття у `link-check.yml`
+
+- **Категорія/пріоритет:** CI / спостережуваність, закрито (реліз `v1.1.0`).
+- **Було:** `stderr` від `--verbose` змішувався з Markdown-звітом у `$GITHUB_STEP_SUMMARY`; `lychee` запускався без `--max-retries`, `--retry-wait-time`, `--timeout` і `concurrency`; перевірявся лише `./README.md`, без `./AUDIT_REPORT.md`.
+- **Стало:** додано `concurrency` (`cancel-in-progress: true`), параметри `--max-retries 2 --retry-wait-time 2 --timeout 20`, розділення потоку діагностики від чистого звіту через `--output "$RUNNER_TEMP/lychee-summary.md"` та перевірку обох документів (`./README.md` і `./AUDIT_REPORT.md`).
+- **Доказ:** локальний прогін `lychee` із точною командою workflow перевірив усі посилання обох файлів із `Errors: 0` та чистим Markdown-звітом у файлі виводу.
+
+### A-06 — гігієна репозиторію, `.gitattributes` та збагачення `README.md`
+
+- **Категорія/пріоритет:** документація / DevOps, закрито (реліз `v1.1.0`).
+- **Було:** `.gitattributes` охоплював лише `*.md`; у `README.md` контакти дублювалися тричі без прямих посилань на продукти DIST Hub та без англомовного блоку; на `origin` залишалися старі злиті гілки `codex/*`, а `delete_branch_on_merge` було вимкнено.
+- **Стало:** `.gitattributes` розширено правилами `eol=lf` для `*.sh`, `*.yml`, `*.yaml`; у `README.md` прибрано зайве дублювання контактів, додано таблицю ключових продуктів DIST Hub (`BCK`, `KubeLens`, `PyMon NOC`, `MyGit`, `Uptime Monitor`, `NetScope Enterprise`, `RDM Manager`) і згорнутий блок `English Summary`; застарілі віддалені гілки видалено, увімкнено `delete_branch_on_merge=true` та вказано `homepage`.
+
 ## 5. Аудит БД
 
 База даних відсутня й не потрібна. Немає клієнта, схеми, ORM, SQL, migration чи application state. SQLite/PostgreSQL у README — навички автора. Зміни БД або міграція не виправдані. Постійні дані — Markdown у Git; звіти CI зберігає платформа GitHub. Її retention, незалежний backup та account recovery до цього коду не належать і тут не перевірялися.
@@ -147,7 +169,7 @@ README в Git — профіль GitHub. PR, push, schedule і manual запус
 - Локальний Lychee CLI перевірив README та позитивні/негативні локальні Markdown fixtures; це не підміняє остаточний GitHub-hosted run із точної PR-ревізії.
 - Linux x86_64 asset локально завантажено і перевірено через installer. Upstream digest для aarch64 закріплено, але ARM CI runner не запускався.
 - Повний SBOM, MFA/recovery акаунта, GitHub log-retention і незалежне відновлення акаунта поза межами коду та цього аудиту.
-- PR #1 merged 2026-10-28 після зеленого required check. Перевірка push для merge-коміту main також успішна. Після merge документаційного PR створити реліз v1.0.2 з фінальної main.
+- PR #1 merged 2026-10-28 після зеленого required check (`dad0bb9`), push-перевірка main пройшла, після чого випущено реліз `v1.0.2`. Оновлення від 2026-11-13 інтегруються через PR із гілки `feat/profile-and-ci-improvements` у `main` для випуску релізу `v1.1.0`.
 
 ## 13. Методологія та джерела
 
@@ -174,4 +196,4 @@ README в Git — профіль GitHub. PR, push, schedule і manual запус
 - [S10 — GitHub Actions job timeout](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idtimeout-minutes)
 - [S11 — GitHub Actions secure use](https://docs.github.com/en/actions/reference/security/secure-use)
 
-**Змінено в гілці:** `.github/workflows/link-check.yml`, `.github/scripts/install-lychee.sh`, `AUDIT_REPORT.md`. README і `.gitattributes` збережені. Усі зміни мають увійти до protected main через успішні PR checks. Release v1.0.2 створюється з фінального main SHA після документаційного follow-up.
+**Змінено в гілці `feat/profile-and-ci-improvements` (2026-11-13):** `.gitattributes`, `.github/scripts/install-lychee.sh`, `.github/workflows/link-check.yml`, `README.md`, `AUDIT_REPORT.md`. Усі зміни входять до protected `main` через PR із пройденим `link-checker`, після чого створюється реліз `v1.1.0`.

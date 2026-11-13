@@ -2,6 +2,12 @@
 set -euo pipefail
 
 readonly version="v0.24.2"
+
+if [[ "$(uname -s)" != "Linux" ]]; then
+  printf 'Unsupported runner OS: %s (expected Linux)\n' "$(uname -s)" >&2
+  exit 1
+fi
+
 case "$(uname -m)" in
   x86_64)
     readonly archive="lychee-x86_64-unknown-linux-gnu.tar.gz"
@@ -32,7 +38,7 @@ printf '%s  %s\n' "$expected_sha256" "$work_dir/$archive" | sha256sum --check --
   exit 1
 }
 
-tar --extract --gzip --file "$work_dir/$archive" --directory "$work_dir"
+tar --extract --gzip --no-same-owner --file "$work_dir/$archive" --directory "$work_dir"
 lychee_binary="$(find "$work_dir" -type f -name lychee -print -quit)"
 if [[ -z "$lychee_binary" || ! -s "$lychee_binary" ]]; then
   printf 'Verified Lychee binary is missing or empty\n' >&2
@@ -40,5 +46,7 @@ if [[ -z "$lychee_binary" || ! -s "$lychee_binary" ]]; then
 fi
 
 install -D -m 0755 "$lychee_binary" "$install_dir/lychee"
-printf '%s\n' "$install_dir" >> "$GITHUB_PATH"
-printf 'Installed Lychee %s with a verified SHA-256 digest\n' "$version"
+if [[ -n "${GITHUB_PATH:-}" ]]; then
+  printf '%s\n' "$install_dir" >> "$GITHUB_PATH"
+fi
+printf 'Installed Lychee %s with a verified SHA-256 digest (%s/lychee)\n' "$version" "$install_dir"

@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   link-checker:
     runs-on: ubuntu-latest
@@ -28,9 +32,14 @@ jobs:
       - name: Check markdown links
         run: |
           set +e
-          lychee --verbose --no-progress --format markdown './README.md' > "$RUNNER_TEMP/lychee.log" 2>&1
+          lychee --verbose --no-progress \
+            --max-retries 2 --retry-wait-time 2 --timeout 20 \
+            --format markdown --output "$RUNNER_TEMP/lychee-summary.md" \
+            './README.md' './AUDIT_REPORT.md'
           result=$?
           set -e
-          cat "$RUNNER_TEMP/lychee.log"
-          cat "$RUNNER_TEMP/lychee.log" >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f "$RUNNER_TEMP/lychee-summary.md" ]]; then
+            cat "$RUNNER_TEMP/lychee-summary.md"
+            cat "$RUNNER_TEMP/lychee-summary.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
           exit "$result"
