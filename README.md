@@ -7,7 +7,7 @@
 <br/>
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-andreichuk.dev-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://andreichuk.dev)
-[![DIST Hub](https://img.shields.io/badge/DIST_Hub-13_Apps_%26_Tools-059669?style=for-the-badge&logo=github&logoColor=white)](https://ajjs1ajjs.github.io/dist/)
+[![DIST Hub](https://img.shields.io/badge/DIST_Hub-16_Apps_%26_Games-059669?style=for-the-badge&logo=github&logoColor=white)](https://ajjs1ajjs.github.io/dist/)
 [![Email](https://img.shields.io/badge/Email-Contact_Me-ea4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yaroslav.andreichuk@gmail.com)
 [![Telegram](https://img.shields.io/badge/Telegram-@Andreichuk__Yaroslav-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Andreichuk_Yaroslav)
 
@@ -20,7 +20,7 @@
 ### 🚀 Про мене & Екосистема
 
 - 🌐 **[Портфоліо (andreichuk.dev)](https://andreichuk.dev)** — продакшн-кейси, архітектура інфраструктури та інтерактивний вебтермінал.
-- 📦 **[DIST Release Hub](https://ajjs1ajjs.github.io/dist/)** — єдиний канал дистрибуції 13 власних продуктів (Linux / Windows / Web PWA) із перевіркою `SHA-256`, підписами `Minisign / Ed25519` та `zero-telemetry`.
+- 📦 **[DIST Release Hub](https://ajjs1ajjs.github.io/dist/)** — єдиний канал дистрибуції 16 власних продуктів та ігор (Linux / Windows / Web PWA) із перевіркою `SHA-256`, підписами `Minisign / Ed25519` та `zero-telemetry`.
 - 🎯 **Фокус:** Надійність інфраструктури (SRE), відмовостійкість і безпека систем, автоматизація CI/CD, розробка швидких нативних клієнтів і системних демонів без зайвих залежностей.
 
 ---
