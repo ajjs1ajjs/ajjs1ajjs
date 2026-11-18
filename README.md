@@ -7,7 +7,7 @@
 <br/>
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-andreichuk.dev-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://andreichuk.dev)
-[![DIST Hub](https://img.shields.io/badge/DIST_Hub-13_Apps_%26_Tools-059669?style=for-the-badge&logo=github&logoColor=white)](https://ajjs1ajjs.github.io/dist/)
+[![DIST Hub](https://img.shields.io/badge/DIST_Hub-18_Apps_%26_Games-059669?style=for-the-badge&logo=github&logoColor=white)](https://ajjs1ajjs.github.io/dist/)
 [![Email](https://img.shields.io/badge/Email-Contact_Me-ea4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yaroslav.andreichuk@gmail.com)
 [![Telegram](https://img.shields.io/badge/Telegram-@Andreichuk__Yaroslav-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Andreichuk_Yaroslav)
 
@@ -20,7 +20,7 @@
 ### 🚀 Про мене & Екосистема
 
 - 🌐 **[Портфоліо (andreichuk.dev)](https://andreichuk.dev)** — продакшн-кейси, архітектура інфраструктури та інтерактивний вебтермінал.
-- 📦 **[DIST Release Hub](https://ajjs1ajjs.github.io/dist/)** — єдиний канал дистрибуції 13 власних продуктів (Linux / Windows / Web PWA) із перевіркою `SHA-256`, підписами `Minisign / Ed25519` та `zero-telemetry`.
+- 📦 **[DIST Release Hub](https://ajjs1ajjs.github.io/dist/)** — єдиний канал дистрибуції 18 продуктів та ігор (Linux / Windows / macOS / Web PWA) із перевіркою `SHA-256`, підписами `Minisign / Ed25519` та `zero-telemetry`.
 - 🎯 **Фокус:** Надійність інфраструктури (SRE), відмовостійкість і безпека систем, автоматизація CI/CD, розробка швидких нативних клієнтів і системних демонів без зайвих залежностей.
 
 ---
@@ -36,6 +36,9 @@
 | **[Uptime Monitor](https://ajjs1ajjs.github.io/dist/p/uptime/)** | Health Sentinel & SLA-моніторинг: HTTP/TCP/SSL-перевірки, миттєві сповіщення та auto-rollback при збоях | `Go` `Svelte` |
 | **[NetScope Enterprise](https://ajjs1ajjs.github.io/dist/p/netscope/)** | Офлайн-інвентаризація мережі: сканування підмереж, інтеграція AD/LDAP, карта топології, підписані оновлення | `C# (.NET)` `Windows` |
 | **[RDM Manager](https://ajjs1ajjs.github.io/dist/p/rdm/)** | Менеджер віддалених підключень для SRE: SSH / RDP / тунелі в одному вікні з шифруванням ключів | `C# (.NET)` `SQLite` |
+| **[WPods](https://ajjs1ajjs.github.io/dist/p/wpods/)** | Функції AirPods на Windows 11 без Test Mode + фікс MediaTek MT7921 | `C# (.NET)` `WinUSB` |
+| **[Claude Switch](https://ajjs1ajjs.github.io/dist/p/claude-switch/)** | Мінімалістичний перемикач акаунтів Claude Desktop у треї з перенесенням чатів і лімітами 5h/week | `Go` `Windows` `macOS` |
+| **[Codex Switch](https://ajjs1ajjs.github.io/dist/p/codex-switch/)** | Нативний перемикач акаунтів Codex Desktop зі шкалами залишку лімітів | `Swift` `.NET WPF` `macOS` |
 
 ---
 
