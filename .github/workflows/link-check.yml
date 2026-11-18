@@ -30,6 +30,8 @@ jobs:
         run: bash ./.github/scripts/install-lychee.sh
 
       - name: Check markdown links
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set +e
           lychee --verbose --no-progress \
