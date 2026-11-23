@@ -5,7 +5,6 @@
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-andreichuk.dev-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://andreichuk.dev)
 [![DIST Hub](https://img.shields.io/badge/DIST_Hub-19_Apps_%26_Games-059669?style=for-the-badge&logo=github&logoColor=white)](https://ajjs1ajjs.github.io/dist/)
 [![Email](https://img.shields.io/badge/Email-Contact-ea4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yaroslav.andreichuk@gmail.com)
 [![Telegram](https://img.shields.io/badge/Telegram-Contact-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/+380979454941)
@@ -18,8 +17,7 @@
 
 ### 🚀 Проєкти & Екосистема
 
-- 🌐 **[Портфоліо (andreichuk.dev)](https://andreichuk.dev)** — продакшн-кейси, архітектура інфраструктури та інтерактивний вебтермінал.
-- 📦 **[DIST Release Hub](https://ajjs1ajjs.github.io/dist/)** — єдиний канал дистрибуції 19 продуктів та ігор (Linux / Windows / macOS / Web PWA) із перевіркою `SHA-256`, підписами `Minisign / Ed25519` та `zero-telemetry`.
+- 📦 **[DIST Release Hub](https://ajjs1ajjs.github.io/dist/)** — основна вітрина та єдиний канал дистрибуції 19 продуктів та ігор (Linux / Windows / macOS / Web PWA) із перевіркою `SHA-256`, підписами `Minisign / Ed25519` та `zero-telemetry`.
 - 🎯 **Фокус:** Надійність інфраструктури, відмовостійкість і безпека систем, автоматизація CI/CD, розробка швидких нативних клієнтів і системних демонів без зайвих залежностей.
 
 ---
@@ -61,7 +59,6 @@
 **DIST Ecosystem — Infrastructure, Desktop & Web**  
 *I design and operate backups, monitoring, self-hosted services and desktop apps. DIST is my own ecosystem of 19 products for Linux, Windows and the Web.*
 
-- **Portfolio:** [andreichuk.dev](https://andreichuk.dev) — production case studies, architecture overview, and interactive terminal.
 - **DIST Release Hub:** [ajjs1ajjs.github.io/dist](https://ajjs1ajjs.github.io/dist/) — 19 standalone tools for Linux, Windows, and Web (Enterprise Backup **[BCK](https://ajjs1ajjs.github.io/dist/p/bck/)**, Kubernetes IDE **[KubeLens](https://ajjs1ajjs.github.io/dist/p/kubelens/)**, NOC Monitoring **[PyMon](https://ajjs1ajjs.github.io/dist/p/pymon/)**, Self-Hosted Git **[MyGit](https://ajjs1ajjs.github.io/dist/p/mygit/)**, SLA Sentinel **[Uptime Monitor](https://ajjs1ajjs.github.io/dist/p/uptime/)**, Network Discovery **[NetScope](https://ajjs1ajjs.github.io/dist/p/netscope/)**, and **[RDM Manager](https://ajjs1ajjs.github.io/dist/p/rdm/)**), distributed with `SHA-256` checksums, `Minisign / Ed25519` signatures, and zero telemetry.
 - **Contact:** [yaroslav.andreichuk@gmail.com](mailto:yaroslav.andreichuk@gmail.com) · [Telegram](https://t.me/+380979454941)
 
